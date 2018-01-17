@@ -2,7 +2,7 @@
 
 > A prototype/demo for a database manager
 
-Built in Vue.js, Webpack, Babel, NodeJS and npm
+Built with Vue.js, Webpack, Babel, Bootstrap, NodeJS and npm
 
 ## Build Setup
 
