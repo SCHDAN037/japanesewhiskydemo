@@ -25,6 +25,8 @@
       </tbody>
     </table>
 
+    <button @click="fetchData">Fetch Data</button>
+
   </div>
 </template>
 
@@ -34,7 +36,18 @@
   export default {
     data () {
       return {
-        rows: [
+        rows: []
+      }
+    },
+
+    methods: {
+
+      fetchData() {
+
+        // This is where we will update the table with all the data
+
+        //This is just seed data
+        this.rows = [
           {
             Name: "Daniel's Whisky",
             Quantity: 1,
@@ -61,10 +74,21 @@
             SalePrice: 10000,
             PricePerBottle: 5000,
             PricePerMl: (5000/750).toFixed(2)
+          },
+          {
+            Name: "Arnon's Whisky",
+            Quantity: 1,
+            Size: 750,
+            Volume: 40,
+            SalePrice: 1000,
+            PricePerBottle: 1000,
+            PricePerMl: (1000/750).toFixed(2)
           }
         ]
       }
+
     }
+
 
   }
 
