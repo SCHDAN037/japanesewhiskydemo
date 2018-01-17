@@ -2,12 +2,13 @@
   <div class="container" id="app">
     <h1>{{ title }}</h1>
 
-    <app-table></app-table>
+    <app-table :rows="this.rows" :fetchData="this.fetchData"></app-table>
 
   </div>
 </template>
 
 <script>
+
   import AppTable from './AppTable.vue'
 
   export default {
@@ -15,14 +16,59 @@
     components: {
       'app-table': AppTable
     },
-    data () {
+    data() {
       return {
-        title: "Japanese Whisky Demo"
+        title: "Japanese Whisky Demo",
+        rows: []
       }
     },
     methods: {
-      fetchAll() {
-        // connect to db here
+      fetchData() {
+        // This is where we will update the table with all the data
+        //This is just seed data
+        console.log('updating rows')
+
+        this.rows = [
+          {
+            Name: "Daniel's Whisky",
+            Quantity: 1,
+            Size: 700,
+            Volume: 43,
+            SalePrice: 2000,
+            PricePerBottle: 2000,
+            PricePerMl: (2000 / 700).toFixed(2)
+          },
+          {
+            Name: "Yossi's Whisky",
+            Quantity: 3,
+            Size: 700,
+            Volume: 45,
+            SalePrice: 15000,
+            PricePerBottle: 5000,
+            PricePerMl: (5000 / 700).toFixed(2)
+          },
+          {
+            Name: "Igna's Whisky",
+            Quantity: 2,
+            Size: 750,
+            Volume: 40,
+            SalePrice: 10000,
+            PricePerBottle: 5000,
+            PricePerMl: (5000 / 750).toFixed(2)
+          },
+          {
+            Name: "Arnon's Whisky",
+            Quantity: 1,
+            Size: 750,
+            Volume: 40,
+            SalePrice: 1000,
+            PricePerBottle: 1000,
+            PricePerMl: (1000 / 750).toFixed(2)
+          }
+        ]
+
+        this.$emit('updatedRows', this.rows)
+
       }
     }
   }
