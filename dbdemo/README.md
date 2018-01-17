@@ -1,6 +1,8 @@
-# dbdemo
+# Japanese Whisky Database Demo
 
-> A Vue.js project
+> A prototype/demo for a database manager
+
+Built in Vue.js, Webpack, Babel, NodeJS and npm
 
 ## Build Setup
 
