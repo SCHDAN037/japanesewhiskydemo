@@ -2,22 +2,24 @@
   <div class="container" id="app">
     <h1>{{ title }}</h1>
 
-    <app-table :editing="editing" :rows="rows"></app-table>
-
+    <app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>
+    <app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>
     <button @click="fetchData">Fetch Data</button>
-    <button @click="editData">Edit Data</button>
+    <button @click="toggleEdit">Edit Data</button>
 
   </div>
 </template>
 
 <script>
 
-  import AppTable from './AppTable.vue'
+  import AppTableView from './AppTableView.vue'
+  import AppTableEdit from './AppTableEdit.vue'
 
   export default {
     name: 'app',
     components: {
-      'app-table': AppTable
+      'app-table-view': AppTableView,
+      'app-table-edit': AppTableEdit
     },
     data() {
       return {
@@ -28,9 +30,9 @@
     },
     methods: {
       fetchData() {
-        // This is where we will update the table with all the data
-        //This is just seed data
-        console.log('updating rows')
+        // This is where we will fetch data from the backend db
+        // This is just seed data
+        console.log(' *** Setting rows in App with seed data')
 
         this.rows = [
           {
@@ -71,14 +73,15 @@
           }
         ]
 
+        console.log(" *** Fetching data from App: ")
         console.log(this.rows)
 
-        this.$emit('updatedRows', this.rows)
-
       },
-      editData() {
-        this.editing = !this.editing
 
+      toggleEdit() {
+
+        this.editing = !this.editing
+        console.log(' *** Toggling edit to: ' + this.editing)
       }
     }
   }
