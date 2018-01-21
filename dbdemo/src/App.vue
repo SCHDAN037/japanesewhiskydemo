@@ -2,7 +2,10 @@
   <div class="container" id="app">
     <h1>{{ title }}</h1>
 
-    <app-table :rows="this.rows" :fetchData="this.fetchData"></app-table>
+    <app-table :editing="editing" :rows="rows"></app-table>
+
+    <button @click="fetchData">Fetch Data</button>
+    <button @click="editData">Edit Data</button>
 
   </div>
 </template>
@@ -19,7 +22,8 @@
     data() {
       return {
         title: "Japanese Whisky Demo",
-        rows: []
+        rows: [],
+        editing: false
       }
     },
     methods: {
@@ -67,7 +71,13 @@
           }
         ]
 
+        console.log(this.rows)
+
         this.$emit('updatedRows', this.rows)
+
+      },
+      editData() {
+        this.editing = !this.editing
 
       }
     }
