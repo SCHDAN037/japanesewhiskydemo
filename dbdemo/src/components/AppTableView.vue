@@ -3,6 +3,7 @@
     <table class="table table-striped table-bordered">
       <thead>
       <tr>
+        <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Quantity</th>
         <th scope="col">Size</th>
@@ -14,6 +15,7 @@
       </thead>
       <tbody>
       <tr v-for="(row, index) in rows" :key="index">
+        <td>{{ index + 1 }}</td>
         <td>{{ row.Name }}</td>
         <td>{{ row.Quantity }}</td>
         <td>{{ row.Size + 'ml'}}</td>
@@ -34,10 +36,10 @@
 
   export default {
 
+    name: 'app-table-view',
 
     //NOTE: Objects and arrays are pass by reference but primitives are pass by copy-value
     //these are inherited from App.vue $data
-    //TODO: maybe use callback functions, defined in the parent, and passed as a prop fn: Function and called on @click event (like saving data)
     props: {
       rows: Array
     },
@@ -45,13 +47,13 @@
     data() {
       return {
         //this is where our local props go
-
       }
     },
 
     //TODO: look into computed props
 
     methods: {},
+
     created() {
       // this is where the eventBus listeners for this comp are defined
 

@@ -4,6 +4,7 @@
     <table class="table table-striped table-bordered">
       <thead>
       <tr>
+        <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Quantity</th>
         <th scope="col">Size</th>
@@ -17,18 +18,34 @@
       <!--TODO: Make the table cells format nicely on edit-->
       <tr v-for="(row, index) in rows" :key="index">
         <td>
-          <input type="text" id="name" :placeholder="row.Name">
+          <p>{{index + 1}}</p>
         </td>
-        <td><input type="text" :placeholder="row.Quantity"></td>
-        <td><input type="text" :placeholder="row.Size"></td>
-        <td><input type="text" :width="row.Volume.length + 1" :placeholder="row.Volume">%</td>
-        <td>R <input type="text" :placeholder="row.SalePrice"></td>
-        <td>R <input type="text" :placeholder="row.PricePerBottle"></td>
-        <td>R <input type="text" :placeholder="row.PricePerMl"></td>
+        <td>
+          <input type="text" :value="row.Name" :placeholder="row.Name">
+        </td>
+        <td>
+          <input type="text" :value="row.Quantity" :placeholder="row.Quantity">
+        </td>
+        <td>
+          <input type="text" :value="row.Size" :placeholder="row.Size">
+        </td>
+        <td>
+          <input type="text" :value="row.Volume" :placeholder="row.Volume">%
+        </td>
+        <td>R
+          <input type="text" :value="row.SalePrice" :placeholder="row.SalePrice">
+        </td>
+        <td>R
+          <input type="text" :value="row.PricePerBottle" :placeholder="row.PricePerBottle">
+        </td>
+        <td>R
+          <input type="text" :value="row.PricePerMl" :placeholder="row.PricePerMl">
+        </td>
       </tr>
       </tbody>
     </table>
     <button @click="changeTestData">Change data</button>
+    <button @click="saveData">Save Data</button>
   </div>
 </template>
 
@@ -38,17 +55,21 @@
 
   export default {
 
+    name: 'app-table-edit',
+
     props: {
       rows: Array
     },
 
     data() {
+
       return {}
     },
 
     methods: {
+
       changeTestData() {
-        var newData = [
+        let newData = [
           {
             Name: "jeff",
             Quantity: 33,
@@ -68,15 +89,18 @@
             PricePerMl: 5
           }
         ]
+        eventBus.dataWasChanged(newData)
+      },
 
-        eventBus.$emit("dataWasChanged", newData)
-
+      saveData() {
 
       }
     },
 
     created() {
+
       // this is where the eventBus listeners for this comp are defined
+
     }
   }
 </script>

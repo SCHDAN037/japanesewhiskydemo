@@ -5,7 +5,16 @@ import App from './App.vue'
 
 // Event Bus is a centralized code/data/event object accessed from all components
 export const eventBus = new Vue({
-  methods: {}
+  methods: {
+    dataWasChanged(data) {
+      console.log('eventBus: dataWasChanged')
+      this.$emit('dataWasChanged', data)
+    },
+    editingWasToggled(data) {
+      console.log('eventBus: editingWasToggled')
+      this.$emit('editingWasToggled', data)
+    }
+  }
 })
 
 

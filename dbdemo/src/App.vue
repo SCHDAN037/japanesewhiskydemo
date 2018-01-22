@@ -2,11 +2,12 @@
   <div class="container" id="app">
     <h1>{{ title }}</h1>
 
-    <app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>
-    <app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>
-    <button @click="fetchData">Fetch Data</button>
-    <button @click="toggleEdit">Edit Data</button>
+    <component :is="selectedComp"></component>
 
+    <!--<app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>-->
+    <!--<app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>-->
+    <button @click="fetchData">Seed Data</button>
+    <button @click="selectedComp = 'app-table-edit'">Edit Data</button>
   </div>
 </template>
 
@@ -17,25 +18,32 @@
   import {eventBus} from "./main"
 
   export default {
+
     name: 'app',
+
     components: {
       'app-table-view': AppTableView,
       'app-table-edit': AppTableEdit
     },
+
     data() {
+
       return {
         title: "Japanese Whisky Demo",
         rows: [],
-        editing: false
+        editing: false,
+        selectedComp: 'app-table-view'
       }
     },
+
     methods: {
+
       fetchData() {
         // This is where we will fetch data from the backend db
         // This is just seed data
         console.log(' *** Setting rows in App with seed data')
 
-        this.rows = [
+        let newData = [
           {
             Name: "Daniel's Whisky",
             Quantity: 1,
@@ -75,20 +83,21 @@
         ]
 
         console.log(" *** Fetching data from App: ")
+        this.rows = newData
         console.log(this.rows)
 
-        eventBus.$emit("dataWasChanged", this.rows)
       },
+
       toggleEdit() {
         this.editing = !this.editing
-        eventBus.$emit("editingWasToggled", this.editing)
+        this.selectedComp = this.editing ? 'app-table-edit' : 'app-table-view'
+        eventBus.editingWasToggled(this.editing)
       }
     },
+
     created() {
       // this is where the eventBus listeners for this comp are defined
-      eventBus.$on("dataWasChanged", (data) => {
-        this.rows = data
-      })
+
     }
   }
 
