@@ -28,21 +28,56 @@
       </tr>
       </tbody>
     </table>
-    <button type="submit">Save Data</button>
+    <button @click="changeTestData">Change data</button>
   </div>
 </template>
 
 <script>
+
+  import {eventBus} from "./main"
+
   export default {
+
+    props: {
+      rows: Array
+    },
 
     data() {
       return {}
     },
 
-    props: {
-      rows: Array
-    }
+    methods: {
+      changeTestData() {
+        var newData = [
+          {
+            Name: "jeff",
+            Quantity: 33,
+            Size: 400,
+            Volume: 43,
+            SalePrice: 4000.2,
+            PricePerBottle: 230,
+            PricePerMl: 2.56
+          },
+          {
+            Name: "fred",
+            Quantity: 3,
+            Size: 800,
+            Volume: 45,
+            SalePrice: 12000,
+            PricePerBottle: 6556,
+            PricePerMl: 5
+          }
+        ]
 
+        eventBus.$emit("dataWasChanged", newData)
+
+
+      }
+    },
+
+    created() {
+      // this is where the eventBus listeners for this comp are defined
+    }
   }
 </script>
 

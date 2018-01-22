@@ -3,6 +3,11 @@ import App from './App.vue'
 
 // Entry point
 
+export const eventBus = new Vue({
+  methods: {}
+})
+
+
 new Vue({
   el: '#app',
   render: h => h(App)

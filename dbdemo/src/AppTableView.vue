@@ -34,6 +34,7 @@
 
   export default {
 
+
     //NOTE: Objects and arrays are pass by reference but primitives are pass by copy-value
     //these are inherited from App.vue $data
     //TODO: maybe use callback functions, defined in the parent, and passed as a prop fn: Function and called on @click event (like saving data)
@@ -50,16 +51,11 @@
 
     //TODO: look into computed props
 
-    methods: {
-      updateData() {
-        console.log("updating new data")
-
-        var thing = this.document.getElementById('1,,quantity')
-        console.log(thing)
+    methods: {},
+    created() {
+      // this is where the eventBus listeners for this comp are defined
 
 
-        // remember when updating a primitive value, emit and event to notify parent class of change
-      }
     }
   }
 

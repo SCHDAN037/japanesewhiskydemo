@@ -14,6 +14,7 @@
 
   import AppTableView from './AppTableView.vue'
   import AppTableEdit from './AppTableEdit.vue'
+  import {eventBus} from "./main"
 
   export default {
     name: 'app',
@@ -76,13 +77,18 @@
         console.log(" *** Fetching data from App: ")
         console.log(this.rows)
 
+        eventBus.$emit("dataWasChanged", this.rows)
       },
-
       toggleEdit() {
-
         this.editing = !this.editing
-        console.log(' *** Toggling edit to: ' + this.editing)
+        eventBus.$emit("editingWasToggled", this.editing)
       }
+    },
+    created() {
+      // this is where the eventBus listeners for this comp are defined
+      eventBus.$on("dataWasChanged", (data) => {
+        this.rows = data
+      })
     }
   }
 
