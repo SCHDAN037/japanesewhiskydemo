@@ -2,28 +2,93 @@
   <div class="container" id="app">
     <h1>{{ title }}</h1>
 
-    <app-table></app-table>
+    <app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>
+    <app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>
+    <button @click="fetchData">Fetch Data</button>
+    <button @click="toggleEdit">Edit Data</button>
 
   </div>
 </template>
 
 <script>
-  import AppTable from './AppTable.vue'
+
+  import AppTableView from './AppTableView.vue'
+  import AppTableEdit from './AppTableEdit.vue'
+  import {eventBus} from "./main"
 
   export default {
     name: 'app',
     components: {
-      'app-table': AppTable
+      'app-table-view': AppTableView,
+      'app-table-edit': AppTableEdit
     },
-    data () {
+    data() {
       return {
-        title: "Japanese Whisky Demo"
+        title: "Japanese Whisky Demo",
+        rows: [],
+        editing: false
       }
     },
     methods: {
-      fetchAll() {
-        // connect to db here
+      fetchData() {
+        // This is where we will fetch data from the backend db
+        // This is just seed data
+        console.log(' *** Setting rows in App with seed data')
+
+        this.rows = [
+          {
+            Name: "Daniel's Whisky",
+            Quantity: 1,
+            Size: 700,
+            Volume: 43,
+            SalePrice: 2000,
+            PricePerBottle: 2000,
+            PricePerMl: (2000 / 700).toFixed(2)
+          },
+          {
+            Name: "Yossi's Whisky",
+            Quantity: 3,
+            Size: 700,
+            Volume: 45,
+            SalePrice: 15000,
+            PricePerBottle: 5000,
+            PricePerMl: (5000 / 700).toFixed(2)
+          },
+          {
+            Name: "Igna's Whisky",
+            Quantity: 2,
+            Size: 750,
+            Volume: 40,
+            SalePrice: 10000,
+            PricePerBottle: 5000,
+            PricePerMl: (5000 / 750).toFixed(2)
+          },
+          {
+            Name: "Arnon's Whisky",
+            Quantity: 1,
+            Size: 750,
+            Volume: 40,
+            SalePrice: 1000,
+            PricePerBottle: 1000,
+            PricePerMl: (1000 / 750).toFixed(2)
+          }
+        ]
+
+        console.log(" *** Fetching data from App: ")
+        console.log(this.rows)
+
+        eventBus.$emit("dataWasChanged", this.rows)
+      },
+      toggleEdit() {
+        this.editing = !this.editing
+        eventBus.$emit("editingWasToggled", this.editing)
       }
+    },
+    created() {
+      // this is where the eventBus listeners for this comp are defined
+      eventBus.$on("dataWasChanged", (data) => {
+        this.rows = data
+      })
     }
   }
 
