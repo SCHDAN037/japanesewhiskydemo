@@ -3,6 +3,7 @@ import App from './App.vue'
 
 // Entry point
 
+// Event Bus is a centralized code/data/event object accessed from all components
 export const eventBus = new Vue({
   methods: {}
 })

@@ -12,8 +12,8 @@
 
 <script>
 
-  import AppTableView from './AppTableView.vue'
-  import AppTableEdit from './AppTableEdit.vue'
+  import AppTableView from './components/AppTableView.vue'
+  import AppTableEdit from './components/AppTableEdit.vue'
   import {eventBus} from "./main"
 
   export default {

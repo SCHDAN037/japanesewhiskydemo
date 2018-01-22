@@ -34,7 +34,7 @@
 
 <script>
 
-  import {eventBus} from "./main"
+  import {eventBus} from "../main"
 
   export default {
 
@@ -81,6 +81,7 @@
   }
 </script>
 
+<!--scoped is css applied to this file only-->
 <style scoped>
 
 </style>
