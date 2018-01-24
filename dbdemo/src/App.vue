@@ -2,12 +2,13 @@
   <div class="container" id="app">
     <h1>{{ title }}</h1>
 
-    <component :is="selectedComp"></component>
+    <component :is="selectedComp" :rows="rows"></component>
 
     <!--<app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>-->
     <!--<app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>-->
     <button @click="fetchData">Seed Data</button>
-    <button @click="selectedComp = 'app-table-edit'">Edit Data</button>
+    <button @click="selectedComp = 'app-table-edit'">Edit</button>
+    <button @click="selectedComp = 'app-table-view'">View</button>
   </div>
 </template>
 
@@ -83,9 +84,8 @@
         ]
 
         console.log(" *** Fetching data from App: ")
-        this.rows = newData
-        console.log(this.rows)
-
+        console.log(newData)
+        eventBus.dataWasChanged(newData)
       },
 
       toggleEdit() {
@@ -97,6 +97,10 @@
 
     created() {
       // this is where the eventBus listeners for this comp are defined
+
+      eventBus.$on("dataWasChanged", (data) => {
+        this.rows = data
+      })
 
     }
   }

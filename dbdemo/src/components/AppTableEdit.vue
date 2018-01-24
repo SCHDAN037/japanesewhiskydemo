@@ -93,7 +93,8 @@
       },
 
       saveData() {
-
+        //get new data from text fields
+        //eventBus.dataWasChanged(newData)
       }
     },
 
