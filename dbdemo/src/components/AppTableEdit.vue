@@ -44,8 +44,8 @@
       </tr>
       </tbody>
     </table>
-    <button @click="changeTestData">Change data</button>
-    <button @click="saveData">Save Data</button>
+    <button @click="changeTestData">Change seed data</button>
+    <button @click="saveData">Save Data (WIP)</button>
   </div>
 </template>
 
@@ -98,10 +98,24 @@
       }
     },
 
+
+    //life cycle hooks:
+
     created() {
-
+      // executed when component is created
       // this is where the eventBus listeners for this comp are defined
+    },
 
+    activated() {
+      // executed when activated (dynamic components)
+    },
+
+    deactivated() {
+      // executed when deactivated (dynamic components)
+    },
+
+    destroyed() {
+      // executed when component is destroyed
     }
   }
 </script>

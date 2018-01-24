@@ -1,9 +1,9 @@
 <template>
   <div class="container" id="app">
     <h1>{{ title }}</h1>
-
-    <component :is="selectedComp" :rows="rows"></component>
-
+    <keep-alive>
+      <component :is="selectedComp" :rows="rows"></component>
+    </keep-alive>
     <!--<app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>-->
     <!--<app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>-->
     <button @click="fetchData">Seed Data</button>
@@ -86,13 +86,8 @@
         console.log(" *** Fetching data from App: ")
         console.log(newData)
         eventBus.dataWasChanged(newData)
-      },
-
-      toggleEdit() {
-        this.editing = !this.editing
-        this.selectedComp = this.editing ? 'app-table-edit' : 'app-table-view'
-        eventBus.editingWasToggled(this.editing)
       }
+
     },
 
     created() {
