@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
+import VueResource from 'vue-resource'
 
 // Entry point
+
+Vue.use(VueResource)
 
 // Event Bus is a centralized code/data/event object accessed from all components
 export const eventBus = new Vue({

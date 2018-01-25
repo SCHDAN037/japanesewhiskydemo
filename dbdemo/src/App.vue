@@ -31,7 +31,6 @@
   import AppTableEdit from './components/AppTableEdit.vue'
   import {eventBus} from "./main"
 
-
   export default {
 
     name: 'app',
@@ -57,6 +56,23 @@
       fetchData() {
         // This is where we will fetch data from the backend db
 
+        // standard POST
+
+        this.$http.post('url', this.rows)
+          .then(response => {
+            console.log(response)
+          }, error => {
+            console.log(error)
+          })
+
+
+        this.$http.get('url')
+          .then(response => {
+            return response.json()
+          })
+          .then(data => {
+
+          })
 
       },
 
