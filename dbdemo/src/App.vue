@@ -19,9 +19,10 @@
     </keep-alive>
     <!--<app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>-->
     <!--<app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>-->
-    <button class="btn btn-info" @click="seedData">Seed Data</button>
-    <button class="btn btn-info" @click="changeMode">{{ changeModeButton }}</button>
-
+    <button class="btn btn-primary" @click="seedData">Seed Data</button>
+    <button class="btn btn-primary" @click="changeMode">{{ changeModeButton }}</button>
+    <button class="btn btn-primary" @click="fetchData">Fetch from Firebase</button>
+    <button class="btn btn-primary" @click="submitData">Save to Firebase</button>
   </div>
 </template>
 
@@ -53,27 +54,41 @@
 
     methods: {
 
-      fetchData() {
-        // This is where we will fetch data from the backend db
+      submitData() {
 
-        // standard POST
+        //This is where we save data to the db
+        //THIS WORKS?
 
-        this.$http.post('url', this.rows)
+        this.$http.post('https://japan-dbdemo.firebaseio.com/data.json', this.rows)
           .then(response => {
             console.log(response)
+            alert("Data was submitted")
           }, error => {
             console.log(error)
+            alert("There was an error sending data to the db")
           })
 
+      },
 
-        this.$http.get('url')
+      fetchData() {
+
+        // This is where we will fetch data from the backend db
+
+
+        this.$http.get('https://japan-dbdemo.firebaseio.com/data.json')
           .then(response => {
             return response.json()
           })
           .then(data => {
-
+            var latest = []
+            for (let key in data) {
+              console.log(data[key])
+              latest = data[key]
+            }
+            console.log(latest)
+            this.rows = latest
+            alert("Data was fetched")
           })
-
       },
 
       seedData() {
