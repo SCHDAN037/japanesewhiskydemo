@@ -3,8 +3,18 @@ import App from './App.vue'
 
 // Entry point
 
+// Event Bus is a centralized code/data/event object accessed from all components
 export const eventBus = new Vue({
-  methods: {}
+  methods: {
+    dataWasChanged(data) {
+      console.log('eventBus: dataWasChanged')
+      this.$emit('dataWasChanged', data)
+    },
+    editingWasToggled(data) {
+      console.log('eventBus: editingWasToggled')
+      this.$emit('editingWasToggled', data)
+    }
+  }
 })
 
 
@@ -25,5 +35,10 @@ update: take new data and update a View of it in the app
 validate: ensure data is correct/valid format
 save: send these changes to the backend
 commit: commit changes to the db
+
+Notes:
+
+AppTableEdit.vue contains the lifecycle hooks we can use.
+
 
  */
