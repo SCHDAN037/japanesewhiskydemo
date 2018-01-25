@@ -2,13 +2,26 @@
   <div class="container" id="app">
     <h1>{{ title }}</h1>
     <keep-alive>
-      <component :is="selectedComp" :rows="rows"></component>
+      <component :is="selectedComp" :rows="rows">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Size</th>
+          <th scope="col">Volume</th>
+          <th scope="col">Sale Price</th>
+          <th scope="col">Price per bottle</th>
+          <th scope="col">Price per ml</th>
+        </tr>
+        </thead>
+      </component>
     </keep-alive>
     <!--<app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>-->
     <!--<app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>-->
-    <button @click="fetchData">Seed Data</button>
-    <button @click="selectedComp = 'app-table-edit'">Edit</button>
-    <button @click="selectedComp = 'app-table-view'">View</button>
+    <button class="btn btn-info" @click="seedData">Seed Data</button>
+    <button class="btn btn-info" @click="changeMode">{{ changeModeButton }}</button>
+
   </div>
 </template>
 
@@ -17,6 +30,7 @@
   import AppTableView from './components/AppTableView.vue'
   import AppTableEdit from './components/AppTableEdit.vue'
   import {eventBus} from "./main"
+
 
   export default {
 
@@ -33,7 +47,8 @@
         title: "Japanese Whisky Demo",
         rows: [],
         editing: false,
-        selectedComp: 'app-table-view'
+        selectedComp: 'app-table-view',   // default component view
+        changeModeButton: 'Edit'          // default
       }
     },
 
@@ -41,6 +56,11 @@
 
       fetchData() {
         // This is where we will fetch data from the backend db
+
+
+      },
+
+      seedData() {
         // This is just seed data
         console.log(' *** Setting rows in App with seed data')
 
@@ -86,6 +106,17 @@
         console.log(" *** Fetching data from App: ")
         console.log(newData)
         eventBus.dataWasChanged(newData)
+      },
+
+      changeMode() {
+        if (this.selectedComp === 'app-table-view') {
+          this.selectedComp = 'app-table-edit'
+          this.changeModeButton = 'View'
+        }
+        else if (this.selectedComp === 'app-table-edit') {
+          this.selectedComp = 'app-table-view'
+          this.changeModeButton = 'Edit'
+        }
       }
 
     },

@@ -1,51 +1,40 @@
 <template>
   <div>
-    <!--TODO: fix form submission and create form validation-->
-    <table class="table table-striped table-bordered">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Size</th>
-        <th scope="col">Volume</th>
-        <th scope="col">Sale Price</th>
-        <th scope="col">Price per bottle</th>
-        <th scope="col">Price per ml</th>
-      </tr>
-      </thead>
-      <tbody>
-      <!--TODO: Make the table cells format nicely on edit-->
-      <tr v-for="(row, index) in rows" :key="index">
-        <td>
-          <p>{{index + 1}}</p>
-        </td>
-        <td>
-          <input type="text" :value="row.Name" :placeholder="row.Name">
-        </td>
-        <td>
-          <input type="text" :value="row.Quantity" :placeholder="row.Quantity">
-        </td>
-        <td>
-          <input type="text" :value="row.Size" :placeholder="row.Size">
-        </td>
-        <td>
-          <input type="text" :value="row.Volume" :placeholder="row.Volume">%
-        </td>
-        <td>R
-          <input type="text" :value="row.SalePrice" :placeholder="row.SalePrice">
-        </td>
-        <td>R
-          <input type="text" :value="row.PricePerBottle" :placeholder="row.PricePerBottle">
-        </td>
-        <td>R
-          <input type="text" :value="row.PricePerMl" :placeholder="row.PricePerMl">
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <button @click="changeTestData">Change seed data</button>
-    <button @click="saveData">Save Data (WIP)</button>
+    <form>
+      <!--TODO: fix form submission and create form validation-->
+      <table class="table table-striped table-bordered">
+        <slot></slot>
+        <tbody>
+        <!--TODO: Make the table cells format nicely on edit-->
+        <tr v-for="(row, index) in rows" :key="index">
+          <td>
+            <p>{{index + 1}}</p>
+          </td>
+          <td>
+            <input type="text" v-model="row.Name">
+          </td>
+          <td>
+            <input type="text" v-model="row.Quantity">
+          </td>
+          <td>
+            <input type="text" v-model="row.Size">
+          </td>
+          <td>
+            <input type="text" v-model="row.Volume">%
+          </td>
+          <td>R
+            <input type="text" v-model="row.SalePrice">
+          </td>
+          <td>R
+            <input type="text" v-model="row.PricePerBottle">
+          </td>
+          <td>R
+            <input type="text" v-model="row.PricePerMl">
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
   </div>
 </template>
 
@@ -90,12 +79,8 @@
           }
         ]
         eventBus.dataWasChanged(newData)
-      },
-
-      saveData() {
-        //get new data from text fields
-        //eventBus.dataWasChanged(newData)
       }
+
     },
 
 
