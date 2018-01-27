@@ -57,15 +57,14 @@
       submitData() {
 
         //This is where we save data to the db
-        //THIS WORKS?
 
-        this.$http.post('https://japan-dbdemo.firebaseio.com/data.json', this.rows)
+        this.$http.put('https://japan-dbdemo.firebaseio.com/data.json', this.rows)
           .then(response => {
             console.log(response)
-            alert("Data was submitted")
+            // alert("Data was submitted")
           }, error => {
             console.log(error)
-            alert("There was an error sending data to the db")
+            // alert("There was an error sending data to the db")
           })
 
       },
@@ -73,21 +72,19 @@
       fetchData() {
 
         // This is where we will fetch data from the backend db
-
-
         this.$http.get('https://japan-dbdemo.firebaseio.com/data.json')
           .then(response => {
             return response.json()
           })
           .then(data => {
-            var latest = []
+            let latest
             for (let key in data) {
               console.log(data[key])
               latest = data[key]
             }
             console.log(latest)
             this.rows = latest
-            alert("Data was fetched")
+            // alert("Data was fetched")
           })
       },
 
