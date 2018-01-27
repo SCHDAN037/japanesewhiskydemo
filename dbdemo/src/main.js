@@ -5,6 +5,7 @@ import VueResource from 'vue-resource'
 // Entry point
 
 Vue.use(VueResource)
+Vue.http.options.root = 'https://japan-dbdemo.firebaseio.com'
 
 // Event Bus is a centralized code/data/event object accessed from all components
 export const eventBus = new Vue({
