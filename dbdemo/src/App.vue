@@ -19,10 +19,13 @@
     </keep-alive>
     <!--<app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>-->
     <!--<app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>-->
-    <button class="btn btn-primary" @click="fetchData">Fetch from Firebase</button>
-    <button class="btn btn-primary" @click="submitData">Save to Firebase</button>
+    <button class="btn btn-primary" @click="fetchData">Fetch from Firebase (Refresh)</button>
+    <button class="btn btn-primary" @click="save">Save to Firebase</button>
     <button class="btn btn-primary" @click="changeMode">{{ changeModeButton }}</button>
-    <button class="btn btn-primary" @click="seedData">Seed Data</button>
+    <button class="btn btn-warning" @click="seedData">Seed Data</button>
+    <br>
+    <br>
+    <button class="btn btn-info" @click="addNewRow">Add new row</button>
   </div>
 </template>
 
@@ -54,25 +57,15 @@
 
     methods: {
 
-      submitData() {
-
-
-
-        //This is where we save data to the db
-
-        this.$http.put('data.json', this.rows)
-          .then(response => {
-            console.log(response)
-            // alert("Data was submitted")
-          }, error => {
-            console.log(error)
-            // alert("There was an error sending data to the db")
-          })
+      addNewRow() {
 
       },
 
-      fetchData() {
+      save () {
+        eventBus.submitData(this.rows)
+      },
 
+      fetchData() {
         // This is where we will fetch data from the backend db
         this.$http.get('data.json')
           .then(response => {
@@ -88,7 +81,7 @@
         // This is just seed data
         console.log(' *** Setting rows in App with seed data')
 
-        let newData = [
+        let seedData = [
           {
             Name: "Daniel's Whisky",
             Quantity: 1,
@@ -128,8 +121,8 @@
         ]
 
         console.log(" *** Fetching data from App: ")
-        console.log(newData)
-        eventBus.dataWasChanged(newData)
+        console.log(seedData)
+        eventBus.dataWasChanged(seedData)
       },
 
       changeMode() {

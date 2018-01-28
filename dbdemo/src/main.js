@@ -6,8 +6,23 @@ import VueResource from 'vue-resource'
 
 Vue.use(VueResource)
 Vue.http.options.root = 'https://japan-dbdemo.firebaseio.com'
+Vue.http.interceptors.push((request, next) => {
+
+  //here i can modify the request before it gets sent
+  //can log things, intercept responses and extract the data correctly before passing it on
+
+  console.log(request)
+  if(request.method == 'POST') {
+    request.method = 'PUT'
+  }
+  next(response => {
+    response.json = () => { return {message: response.body} }
+  })
+})
 
 // Event Bus is a centralized code/data/event object accessed from all components
+
+//TODO consider redoing this
 export const eventBus = new Vue({
   methods: {
     dataWasChanged(data) {
@@ -17,7 +32,22 @@ export const eventBus = new Vue({
     editingWasToggled(data) {
       console.log('eventBus: editingWasToggled')
       this.$emit('editingWasToggled', data)
+    },
+
+    submitData(data) {
+      //This is where we save data to the db
+
+      this.$http.post('data.json', data)
+        .then(response => {
+          // console.log(response)
+          // alert("Data was submitted")
+        }, error => {
+          console.log(error)
+          // alert("There was an error sending data to the db")
+        })
+
     }
+
   }
 })
 
