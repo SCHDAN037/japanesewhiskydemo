@@ -68,6 +68,7 @@
 
     methods: {
 
+      //not really needed, used for testing
       changeTestData() {
         let newData = [
           {
@@ -99,7 +100,7 @@
     },
 
 
-    //life cycle hooks:
+    //life cycle hooks for reference:
 
     created() {
       // executed when component is created
