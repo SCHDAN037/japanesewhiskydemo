@@ -44,6 +44,7 @@
       </tr>
       </tbody>
     </table>
+    <slot></slot>
     <button @click="changeTestData">Change seed data</button>
     <button @click="saveData">Save Data (WIP)</button>
   </div>

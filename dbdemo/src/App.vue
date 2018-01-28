@@ -1,14 +1,16 @@
 <template>
   <div class="container" id="app">
     <h1>{{ title }}</h1>
-    <keep-alive>
-      <component :is="selectedComp" :rows="rows"></component>
-    </keep-alive>
-    <!--<app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>-->
-    <!--<app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>-->
-    <button @click="fetchData">Seed Data</button>
-    <button @click="selectedComp = 'app-table-edit'">Edit</button>
-    <button @click="selectedComp = 'app-table-view'">View</button>
+    <login></login>
+    <div v-if="loggedIn">
+      <keep-alive>
+        <component :is="selectedComp" :rows="rows">
+          <button @click="fetchData">Seed Data</button>
+          <button @click="selectedComp = 'app-table-edit'">Edit</button>
+          <button @click="selectedComp = 'app-table-view'">View</button>
+        </component>
+      </keep-alive>
+    </div>
   </div>
 </template>
 
@@ -16,6 +18,7 @@
 
   import AppTableView from './components/AppTableView.vue'
   import AppTableEdit from './components/AppTableEdit.vue'
+  import Login from './components/Login'
   import {eventBus} from "./main"
 
   export default {
@@ -24,7 +27,8 @@
 
     components: {
       'app-table-view': AppTableView,
-      'app-table-edit': AppTableEdit
+      'app-table-edit': AppTableEdit,
+      'login': Login
     },
 
     data() {
@@ -33,7 +37,8 @@
         title: "Japanese Whisky Demo",
         rows: [],
         editing: false,
-        selectedComp: 'app-table-view'
+        selectedComp: 'login',
+        loggedIn: false
       }
     },
 
@@ -95,6 +100,11 @@
 
       eventBus.$on("dataWasChanged", (data) => {
         this.rows = data
+      })
+
+      eventBus.$on("userLoggedIn", () => {
+        this.loggedIn = true
+        this.selectedComp = "app-table-view"
       })
 
     }

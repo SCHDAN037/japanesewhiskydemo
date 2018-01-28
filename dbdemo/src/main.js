@@ -13,6 +13,17 @@ export const eventBus = new Vue({
     editingWasToggled(data) {
       console.log('eventBus: editingWasToggled')
       this.$emit('editingWasToggled', data)
+    },
+
+    loggedIn(user, auth) {
+      if (auth) {
+        console.log("******** Successful Login: " + user)
+        this.$emit("userLoggedIn", user)
+      }
+      else {
+        console.log("Failed login attempt: " + user)
+        this.$emit("loginFailed", user)
+      }
     }
   }
 })
