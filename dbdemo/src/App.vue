@@ -2,13 +2,30 @@
   <div class="container" id="app">
     <h1>{{ title }}</h1>
     <keep-alive>
-      <component :is="selectedComp" :rows="rows"></component>
+      <component :is="selectedComp" :rows="rows">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Size</th>
+          <th scope="col">Volume</th>
+          <th scope="col">Sale Price</th>
+          <th scope="col">Price per bottle</th>
+          <th scope="col">Price per ml</th>
+        </tr>
+        </thead>
+      </component>
     </keep-alive>
     <!--<app-table-view v-if="this.editing === false" :rows="rows"></app-table-view>-->
     <!--<app-table-edit v-else-if="this.editing === true" :rows="rows"></app-table-edit>-->
-    <button @click="fetchData">Seed Data</button>
-    <button @click="selectedComp = 'app-table-edit'">Edit</button>
-    <button @click="selectedComp = 'app-table-view'">View</button>
+    <button class="btn btn-primary" @click="fetchData">Fetch from Firebase (Refresh)</button>
+    <button class="btn btn-primary" @click="save">Save to Firebase</button>
+    <button class="btn btn-primary" @click="changeMode">{{ changeModeButton }}</button>
+    <button class="btn btn-warning" @click="seedData">Seed Data</button>
+    <br>
+    <br>
+    <button class="btn btn-info" @click="addNewRow">Add new row</button>
   </div>
 </template>
 
@@ -33,18 +50,38 @@
         title: "Japanese Whisky Demo",
         rows: [],
         editing: false,
-        selectedComp: 'app-table-view'
+        selectedComp: 'app-table-view',   // default component view
+        changeModeButton: 'Edit'          // default
       }
     },
 
     methods: {
 
+      addNewRow() {
+
+      },
+
+      save () {
+        eventBus.submitData(this.rows)
+      },
+
       fetchData() {
         // This is where we will fetch data from the backend db
+        this.$http.get('data.json')
+          .then(response => {
+            return response.json()
+          })
+          .then(data => {
+            this.rows = data
+            // alert("Data was fetched")
+          })
+      },
+
+      seedData() {
         // This is just seed data
         console.log(' *** Setting rows in App with seed data')
 
-        let newData = [
+        let seedData = [
           {
             Name: "Daniel's Whisky",
             Quantity: 1,
@@ -84,8 +121,19 @@
         ]
 
         console.log(" *** Fetching data from App: ")
-        console.log(newData)
-        eventBus.dataWasChanged(newData)
+        console.log(seedData)
+        eventBus.dataWasChanged(seedData)
+      },
+
+      changeMode() {
+        if (this.selectedComp === 'app-table-view') {
+          this.selectedComp = 'app-table-edit'
+          this.changeModeButton = 'Save'
+        }
+        else if (this.selectedComp === 'app-table-edit') {
+          this.selectedComp = 'app-table-view'
+          this.changeModeButton = 'Edit'
+        }
       }
 
     },
@@ -97,6 +145,7 @@
         this.rows = data
       })
 
+      this.fetchData()
     }
   }
 
