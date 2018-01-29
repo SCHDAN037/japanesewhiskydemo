@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <!--TODO: fix form submission and create form validation-->
+  <div class="col-auto">
+    <!--TODO: create form validation-->
     <table class="table table-striped table-bordered">
       <thead>
       <tr>
@@ -14,39 +14,39 @@
         <th scope="col">Price per ml</th>
       </tr>
       </thead>
-      <tbody>
-      <!--TODO: Make the table cells format nicely on edit-->
-      <tr v-for="(row, index) in rows" :key="index">
-        <td>
-          <p>{{index + 1}}</p>
-        </td>
-        <td>
-          <input type="text" :value="row.Name" :placeholder="row.Name">
-        </td>
-        <td>
-          <input type="text" :value="row.Quantity" :placeholder="row.Quantity">
-        </td>
-        <td>
-          <input type="text" :value="row.Size" :placeholder="row.Size">
-        </td>
-        <td>
-          <input type="text" :value="row.Volume" :placeholder="row.Volume">%
-        </td>
-        <td>R
-          <input type="text" :value="row.SalePrice" :placeholder="row.SalePrice">
-        </td>
-        <td>R
-          <input type="text" :value="row.PricePerBottle" :placeholder="row.PricePerBottle">
-        </td>
-        <td>R
-          <input type="text" :value="row.PricePerMl" :placeholder="row.PricePerMl">
-        </td>
-      </tr>
-      </tbody>
+        <tbody>
+        <!--TODO: Make the table cells format nicely on edit-->
+
+        <tr v-for="(row, index) in rows" :key="index">
+          <th scope="row">
+            <p>{{index + 1}}</p>
+          </th>
+          <td>
+            <span class="input-group input-group-sm"><input class="form-control" type="text" v-model="row.Name"></span>
+          </td>
+          <td>
+            <span class="input-group input-group-sm"><input class="form-control" type="text" v-model="row.Quantity"></span>
+          </td>
+          <td>
+            <span class="input-group input-group-sm"><input class="form-control" type="text" v-model="row.Size"></span>
+          </td>
+          <td>
+            <span class="input-group input-group-sm"><input class="form-control" type="text" v-model="row.Volume"> %</span>
+          </td>
+          <td>
+            <span class="input-group input-group-sm">R <input class="form-control" type="text" v-model="row.SalePrice"></span>
+          </td>
+          <td>
+            <span class="input-group input-group-sm">R <input class="form-control" type="text" v-model="row.PricePerBottle"></span>
+          </td>
+          <td>
+            <span class="input-group input-group-sm">R <input class="form-control" type="text" v-model="row.PricePerMl"></span>
+          </td>
+        </tr>
+        </tbody>
     </table>
     <slot></slot>
-    <button @click="changeTestData">Change seed data</button>
-    <button @click="saveData">Save Data (WIP)</button>
+    <button class="btn btn-secondary" @click="changeTestData">Change seed data</button>
   </div>
 </template>
 
@@ -94,10 +94,6 @@
         eventBus.dataWasChanged(newData)
       },
 
-      saveData() {
-        //get new data from text fields
-        //eventBus.dataWasChanged(newData)
-      }
     },
 
 
@@ -124,5 +120,6 @@
 
 <!--scoped is css applied to this file only-->
 <style scoped>
+
 
 </style>

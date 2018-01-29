@@ -1,13 +1,17 @@
 <template>
+
+  <!--TODO add bootstrap alerts to replace popups-->
   <div class="container" id="app">
     <h1>{{ title }}</h1>
-    <login></login>
+    <login v-if="!loggedIn"></login>
     <div v-if="loggedIn">
       <keep-alive>
         <component :is="selectedComp" :rows="rows">
-          <button @click="fetchData">Seed Data</button>
-          <button @click="selectedComp = 'app-table-edit'">Edit</button>
-          <button @click="selectedComp = 'app-table-view'">View</button>
+          <button class="btn btn-warning" @click="fetchData">Seed Data</button>
+          <button class="btn btn-primary" @click="fetchFromDb">Fetch from Db</button>
+          <button class="btn btn-success" @click="saveToDB">Save to Db</button>
+          <button class="btn btn-info" @click="changeMode">{{ changeModeMessage }}</button>
+          <button class="btn btn-info" @click="addNewRow" v-if="selectedComp === 'app-table-edit'">Add new Row</button>
         </component>
       </keep-alive>
     </div>
@@ -38,11 +42,60 @@
         rows: [],
         editing: false,
         selectedComp: 'login',
-        loggedIn: false
+        loggedIn: false,
+        resource: {},
+        changeModeMessage: 'Edit'
       }
     },
 
     methods: {
+
+      changeMode() {
+        if(this.selectedComp === 'app-table-edit') {
+          this.selectedComp = 'app-table-view'
+          this.changeModeMessage = 'Edit'
+        }
+        else {
+          this.selectedComp = 'app-table-edit'
+          this.changeModeMessage = 'View'
+        }
+
+      },
+
+
+      deleteRow(n) {
+        this.rows.splice(n)
+      },
+
+      addNewRow() {
+        this.rows.push(
+          {
+
+            Name: "Whisky name",
+            Quantity: 0,
+            Size: 0,
+            Volume: 0,
+            SalePrice: 0,
+            PricePerBottle: 0,
+            PricePerMl: 0
+
+          })
+      },
+
+      fetchFromDb() {
+        this.resource.get('data.json')
+          .then(response => {
+            console.log(response)
+            eventBus.dataWasChanged(response.body)
+          })
+      },
+
+      saveToDB() {
+        this.resource.update({}, this.rows)
+          .then(() => {
+            alert("Data was saved")
+          })
+      },
 
       fetchData() {
         // This is where we will fetch data from the backend db
@@ -104,9 +157,17 @@
 
       eventBus.$on("userLoggedIn", () => {
         this.loggedIn = true
+        this.fetchFromDb()
         this.selectedComp = "app-table-view"
       })
 
+      //TODO consider moving resources to a global location like main eventBus
+      const customActions = {
+        //configure resource for custom actions
+        createNewUser: {method: 'POST', url: 'users.json'}
+      }
+
+      this.resource = this.$resource('data.json', {})
     }
   }
 
