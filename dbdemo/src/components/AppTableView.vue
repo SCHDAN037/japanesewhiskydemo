@@ -1,18 +1,7 @@
 <template>
   <div>
     <table class="table table-striped table-bordered">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Size</th>
-        <th scope="col">Volume</th>
-        <th scope="col">Sale Price</th>
-        <th scope="col">Price per bottle</th>
-        <th scope="col">Price per ml</th>
-      </tr>
-      </thead>
+      <slot></slot>
       <tbody>
       <tr v-for="(row, index) in rows" :key="index">
         <td>{{ index + 1 }}</td>

@@ -18,6 +18,8 @@ Vue.http.interceptors.push((request, next) => {
 })
 
 // Event Bus is a centralized code/data/event object accessed from all components
+
+//TODO consider redoing this
 export const eventBus = new Vue({
   methods: {
     dataWasChanged(data) {
@@ -39,6 +41,7 @@ export const eventBus = new Vue({
         this.$emit("loginFailed", user)
       }
     }
+
   }
 })
 

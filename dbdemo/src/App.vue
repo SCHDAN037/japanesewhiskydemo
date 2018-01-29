@@ -1,8 +1,8 @@
 <template>
-
   <!--TODO add bootstrap alerts to replace popups-->
   <div class="container" id="app">
     <h1>{{ title }}</h1>
+
     <hr>
     <login v-if="!loggedIn"></login>
     <div v-if="loggedIn">
@@ -20,8 +20,6 @@
     <hr>
     <p><i>Daniel Schwartz 2018 dbdemo version: 3</i></p>
   </div>
-
-
 </template>
 
 <script>
@@ -42,20 +40,20 @@
     },
 
     data() {
-
       return {
         title: "Japanese Whisky Demo",
         rows: [],
         editing: false,
+
         selectedComp: 'login',
         loggedIn: false,
         resource: {},
         changeModeMessage: 'Edit'
+
       }
     },
 
     methods: {
-
       changeMode() {
         if(this.selectedComp === 'app-table-edit') {
           this.selectedComp = 'app-table-view'
@@ -67,7 +65,6 @@
         }
 
       },
-
 
       deleteRow(n) {
         this.rows.splice(n)
@@ -105,10 +102,21 @@
 
       fetchData() {
         // This is where we will fetch data from the backend db
+        this.$http.get('data.json')
+          .then(response => {
+            return response.json()
+          })
+          .then(data => {
+            this.rows = data
+            // alert("Data was fetched")
+          })
+      },
+
+      seedData() {
         // This is just seed data
         console.log(' *** Setting rows in App with seed data')
 
-        let newData = [
+        let seedData = [
           {
             Name: "Daniel's Whisky",
             Quantity: 1,
@@ -148,8 +156,19 @@
         ]
 
         console.log(" *** Fetching data from App: ")
-        console.log(newData)
-        eventBus.dataWasChanged(newData)
+        console.log(seedData)
+        eventBus.dataWasChanged(seedData)
+      },
+
+      changeMode() {
+        if (this.selectedComp === 'app-table-view') {
+          this.selectedComp = 'app-table-edit'
+          this.changeModeButton = 'Save'
+        }
+        else if (this.selectedComp === 'app-table-edit') {
+          this.selectedComp = 'app-table-view'
+          this.changeModeButton = 'Edit'
+        }
       }
 
     },
@@ -160,7 +179,7 @@
       eventBus.$on("dataWasChanged", (data) => {
         this.rows = data
       })
-
+      
       eventBus.$on("userLoggedIn", () => {
         this.loggedIn = true
         this.fetchFromDb()
@@ -174,8 +193,8 @@
       }
 
       this.resource = this.$resource('data.json', {})
+
     }
   }
-
 </script>
 

@@ -55,7 +55,6 @@
   import {eventBus} from "../main"
 
   export default {
-
     name: 'app-table-edit',
 
     props: {
@@ -63,12 +62,10 @@
     },
 
     data() {
-
       return {}
     },
 
     methods: {
-
       //not really needed, used for testing
       changeTestData() {
         let newData = [
@@ -92,13 +89,10 @@
           }
         ]
         eventBus.dataWasChanged(newData)
-      },
-
+      }
     },
 
-
     //life cycle hooks for reference:
-
     created() {
       // executed when component is created
       // this is where the eventBus listeners for this comp are defined
