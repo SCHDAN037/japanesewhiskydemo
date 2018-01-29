@@ -2,21 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueResource from 'vue-resource'
 
-// Entry point
-
 Vue.use(VueResource)
-Vue.http.options.root = 'https://japan-dbdemo.firebaseio.com'
+
+Vue.http.options.root = 'https://japan-dbdemo.firebaseio.com/'
 Vue.http.interceptors.push((request, next) => {
-
-  //here i can modify the request before it gets sent
-  //can log things, intercept responses and extract the data correctly before passing it on
-
   console.log(request)
-  if(request.method == 'POST') {
+  if (request.method === 'POST') {
     request.method = 'PUT'
   }
   next(response => {
-    response.json = () => { return {message: response.body} }
+    response.json = () => {
+      return {messages: response.body}
+    }
   })
 })
 
@@ -34,18 +31,15 @@ export const eventBus = new Vue({
       this.$emit('editingWasToggled', data)
     },
 
-    submitData(data) {
-      //This is where we save data to the db
-
-      this.$http.post('data.json', data)
-        .then(response => {
-          // console.log(response)
-          // alert("Data was submitted")
-        }, error => {
-          console.log(error)
-          // alert("There was an error sending data to the db")
-        })
-
+    loggedIn(user, auth) {
+      if (auth) {
+        console.log("******** Successful Login: " + user)
+        this.$emit("userLoggedIn", user)
+      }
+      else {
+        console.log("Failed login attempt: " + user)
+        this.$emit("loginFailed", user)
+      }
     }
 
   }

@@ -2,7 +2,8 @@
 
 > A prototype/demo for a database manager
 
-Built with Vue.js, Webpack, Babel, Bootstrap, NodeJS and npm
+- Built with Vue.js, Webpack, Babel, Bootstrap, NodeJS, and npm
+- Hosted on AWS and Firebase
 
 ## Build Setup
 
@@ -21,6 +22,10 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 
 ## The design so far...
 
+### main.js
+
+This is the entry point of the App. Here Vue is initialized, as well as global options and objects.
+
 ### App.vue
 
 This is the main 'root' vue component that initializes the other components. It has a function to add seed data currently.
@@ -36,3 +41,9 @@ This is the component that renders the table with all the data. It serves as the
 
 This is the component in charge of editing the data in the table, and saving these changes back to the db (via App.vue)
 
+### Login.vue
+
+This is the login page that is the landing. Logging in destroys this component from the DOM.
+
+
+#### Last updated: 29 Jan 2018

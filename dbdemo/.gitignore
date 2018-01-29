@@ -10,3 +10,4 @@ dbdemo/.idea
 *.ntvs*
 *.njsproj
 *.sln
+.creds.json

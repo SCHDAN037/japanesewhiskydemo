@@ -1,40 +1,52 @@
 <template>
-  <div>
-    <form>
-      <!--TODO: fix form submission and create form validation-->
-      <table class="table table-striped table-bordered">
-        <slot></slot>
+  <div class="col-auto">
+    <!--TODO: create form validation-->
+    <table class="table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Size</th>
+        <th scope="col">Volume</th>
+        <th scope="col">Sale Price</th>
+        <th scope="col">Price per bottle</th>
+        <th scope="col">Price per ml</th>
+      </tr>
+      </thead>
         <tbody>
         <!--TODO: Make the table cells format nicely on edit-->
+
         <tr v-for="(row, index) in rows" :key="index">
-          <td>
+          <th scope="row">
             <p>{{index + 1}}</p>
+          </th>
+          <td>
+            <span class="input-group input-group-sm"><input class="form-control" type="text" v-model="row.Name"></span>
           </td>
           <td>
-            <input type="text" v-model="row.Name">
+            <span class="input-group input-group-sm"><input class="form-control" type="text" v-model="row.Quantity"></span>
           </td>
           <td>
-            <input type="text" v-model="row.Quantity">
+            <span class="input-group input-group-sm"><input class="form-control" type="text" v-model="row.Size"></span>
           </td>
           <td>
-            <input type="text" v-model="row.Size">
+            <span class="input-group input-group-sm"><input class="form-control" type="text" v-model="row.Volume"> %</span>
           </td>
           <td>
-            <input type="text" v-model="row.Volume">%
+            <span class="input-group input-group-sm">R <input class="form-control" type="text" v-model="row.SalePrice"></span>
           </td>
-          <td>R
-            <input type="text" v-model="row.SalePrice">
+          <td>
+            <span class="input-group input-group-sm">R <input class="form-control" type="text" v-model="row.PricePerBottle"></span>
           </td>
-          <td>R
-            <input type="text" v-model="row.PricePerBottle">
-          </td>
-          <td>R
-            <input type="text" v-model="row.PricePerMl">
+          <td>
+            <span class="input-group input-group-sm">R <input class="form-control" type="text" v-model="row.PricePerMl"></span>
           </td>
         </tr>
         </tbody>
-      </table>
-    </form>
+    </table>
+    <slot></slot>
+    <!--<button class="btn btn-secondary" @click="changeTestData">Change seed data</button>-->
   </div>
 </template>
 
@@ -43,7 +55,6 @@
   import {eventBus} from "../main"
 
   export default {
-
     name: 'app-table-edit',
 
     props: {
@@ -51,12 +62,11 @@
     },
 
     data() {
-
       return {}
     },
 
     methods: {
-
+      //not really needed, used for testing
       changeTestData() {
         let newData = [
           {
@@ -80,12 +90,9 @@
         ]
         eventBus.dataWasChanged(newData)
       }
-
     },
 
-
-    //life cycle hooks:
-
+    //life cycle hooks for reference:
     created() {
       // executed when component is created
       // this is where the eventBus listeners for this comp are defined
@@ -107,5 +114,6 @@
 
 <!--scoped is css applied to this file only-->
 <style scoped>
+
 
 </style>
