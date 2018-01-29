@@ -3,10 +3,12 @@
   <!--TODO add bootstrap alerts to replace popups-->
   <div class="container" id="app">
     <h1>{{ title }}</h1>
+    <hr>
     <login v-if="!loggedIn"></login>
     <div v-if="loggedIn">
       <keep-alive>
         <component :is="selectedComp" :rows="rows">
+          <br>
           <button class="btn btn-warning" @click="fetchData">Seed Data</button>
           <button class="btn btn-primary" @click="fetchFromDb">Fetch from Db</button>
           <button class="btn btn-success" @click="saveToDB">Save to Db</button>
@@ -15,7 +17,11 @@
         </component>
       </keep-alive>
     </div>
+    <hr>
+    <p><i>Daniel Schwartz 2018 dbdemo version: 3</i></p>
   </div>
+
+
 </template>
 
 <script>

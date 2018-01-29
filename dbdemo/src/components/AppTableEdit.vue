@@ -46,7 +46,7 @@
         </tbody>
     </table>
     <slot></slot>
-    <button class="btn btn-secondary" @click="changeTestData">Change seed data</button>
+    <!--<button class="btn btn-secondary" @click="changeTestData">Change seed data</button>-->
   </div>
 </template>
 
