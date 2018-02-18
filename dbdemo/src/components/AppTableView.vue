@@ -1,10 +1,21 @@
 <template>
   <div>
     <table class="table table-striped table-bordered">
-      <slot></slot>
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Size</th>
+        <th scope="col">Volume</th>
+        <th scope="col">Sale Price</th>
+        <th scope="col">Price per bottle</th>
+        <th scope="col">Price per ml</th>
+      </tr>
+      </thead>
       <tbody>
       <tr v-for="(row, index) in rows" :key="index">
-        <td>{{ index + 1 }}</td>
+        <th scope="row">{{ index + 1 }}</th>
         <td>{{ row.Name }}</td>
         <td>{{ row.Quantity }}</td>
         <td>{{ row.Size + 'ml'}}</td>

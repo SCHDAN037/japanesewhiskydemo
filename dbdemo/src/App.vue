@@ -160,16 +160,7 @@
         eventBus.dataWasChanged(seedData)
       },
 
-      changeMode() {
-        if (this.selectedComp === 'app-table-view') {
-          this.selectedComp = 'app-table-edit'
-          this.changeModeButton = 'Save'
-        }
-        else if (this.selectedComp === 'app-table-edit') {
-          this.selectedComp = 'app-table-view'
-          this.changeModeButton = 'Edit'
-        }
-      }
+
 
     },
 
@@ -179,7 +170,7 @@
       eventBus.$on("dataWasChanged", (data) => {
         this.rows = data
       })
-      
+
       eventBus.$on("userLoggedIn", () => {
         this.loggedIn = true
         this.fetchFromDb()
