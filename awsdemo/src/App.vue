@@ -3,8 +3,8 @@
     <h1>AWS + Vue.js Demo</h1>
     <p><i>by Daniel Schwartz</i></p>
     <hr>
-    <router-view :records="records"/>
-    <button-panel :records="records"></button-panel>
+    <router-view :records="records" :editing="editing"/>
+    <button-panel :records="records" :editing="editing"></button-panel>
   </div>
 </template>
 
@@ -38,12 +38,16 @@
           quantity: '2 bottles',
           price: 'R 5000'
         }
-      ]
+      ],
+      editing: false
     }
   },
   created () {
     eventBus.$on('RecordsUpdated', (records) => {
       this.records = records
+    })
+    eventBus.$on('ToggleEdit', (editing) => {
+      this.editing = editing
     })
   }
 }
