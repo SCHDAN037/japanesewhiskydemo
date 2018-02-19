@@ -10,6 +10,7 @@
 
 <script>
   import ButtonPanel from './components/ButtonPanel'
+  import { eventBus } from './main'
 
   export default {
   name: 'App',
@@ -39,6 +40,11 @@
         }
       ]
     }
+  },
+  created () {
+    eventBus.$on('RecordsUpdated', (records) => {
+      this.records = records
+    })
   }
 }
 </script>
